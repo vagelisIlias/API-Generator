@@ -25,7 +25,9 @@ class ProcessTicketTest extends TestCase
             'created_at' => now()->subYear(),
         ]);
 
-        $newTicket = Ticket::factory()->create();
+        $newTicket = Ticket::factory()->create([
+            'created_at' => now(),
+        ]);
 
         Artisan::call('app:process-ticket');
 
