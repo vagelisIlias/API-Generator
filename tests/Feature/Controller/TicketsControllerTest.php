@@ -4,6 +4,7 @@ namespace Tests\Feature\Controller;
 
 use Tests\TestCase;
 use App\Models\Ticket;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -47,5 +48,34 @@ class TicketsControllerTest extends TestCase
         $response = $this->json('get', route('ticket.user', ['email' => $ticket]));
 
         $response->assertStatus(200);
+    }
+
+    public function test_it_can_return_stats()
+    {   
+        $this->withoutExceptionHandling();
+
+        Ticket::factory()->count(5)->create(['status' => false]);
+        Ticket::factory()->count(3)->create(['status' => true]);
+
+        $response = $this->json('get', route('stats'));
+
+        $totalTickets = Ticket::count();
+        $unprocessedTickets = Ticket::where('status', false)->count();
+
+        $userWithMostTickets = Ticket::select('user_name', DB::raw('COUNT(user_email) as total'))
+            ->groupBy('user_name')
+            ->orderBy('total', 'desc')
+            ->first();
+            
+        $lastTicket = Ticket::where('status', true)
+            ->orderBy('updated_at', 'desc')
+            ->first();
+    
+        $response->assertStatus(200, [
+            'total_tickets' => $totalTickets,
+            'unprocessed_tickets' => $unprocessedTickets,
+            'most_tickets_by_user' => $userWithMostTickets->user_name . ' (' . $userWithMostTickets->total . ')',
+            'last_processed' => $lastTicket?->updated_at,
+        ]);
     }
 }

@@ -12,4 +12,11 @@ class TicketsController extends Controller
 
         return response()->json($tickets);
     }
+
+    public function user(string $email)
+    {
+        $tickets = Ticket::where('user_email', $email)->paginate();
+
+        return response()->json($tickets);
+    }
 }

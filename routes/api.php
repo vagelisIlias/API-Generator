@@ -19,4 +19,5 @@ Route::get('/tickets/{status}', [TicketsController::class, 'index'])
     ->name('ticket.index');
 Route::get('/users/{email}/tickets', [TicketsController::class, 'user'])
     ->name('ticket.user');
-
+Route::get('/stats', [TicketsController::class, 'stats'])
+    ->name('stats');
