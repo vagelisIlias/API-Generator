@@ -26,16 +26,7 @@ class GenerateTicket extends Command
      */
     public function handle()
     {
-        $dummyData = [
-            'subject' => fake()->sentence,
-            'content' => fake()->paragraph,
-            'user_name' => fake()->name,
-            'user_email' => fake()->email,
-            'created_at' => fake()->dateTime(),
-            'status' => false,
-        ];
-
-        Ticket::create($dummyData);
+        Ticket::factory()->create();
 
         $this->info('Ticket generated successfully!');  
     }
