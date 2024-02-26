@@ -3,6 +3,7 @@
 namespace Tests\Feature\Console\Commands;
 
 use Tests\TestCase;
+use App\Models\Ticket;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -26,13 +27,13 @@ class GenerateTicketTest extends TestCase
     {
         Artisan::call('app:generate-ticket');
 
-        $lastTicket = Ticket::last();
+        $lastTicket = Ticket::latest()->first();
 
         $this->assertNotEmpty($lastTicket->subject);
         $this->assertNotEmpty($lastTicket->content);
         $this->assertNotEmpty($lastTicket->user_name);
         $this->assertNotEmpty($lastTicket->user_email);
-        $this->assertNotEmpty($lastTicket->status);
+        $this->assertFalse($lastTicket->status);
         $this->assertNotEmpty($lastTicket->created_at);
         $this->assertNotEmpty($lastTicket->updated_at);
     }
