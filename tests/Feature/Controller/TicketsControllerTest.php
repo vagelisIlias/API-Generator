@@ -36,4 +36,16 @@ class TicketsControllerTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    public function test_it_can_show_list_of_tickets_with_corresponding_user_email()
+    {
+        $this->withoutExceptionHandling();
+
+        $userEmail = 'test@example.com';
+        $ticket = Ticket::factory()->create(['user_email' => $userEmail]);
+
+        $response = $this->json('get', route('ticket.user', ['email' => $ticket]));
+
+        $response->assertStatus(200);
+    }
 }

@@ -17,4 +17,6 @@ use App\Http\Controllers\TicketsController;
 Route::get('/tickets/{status}', [TicketsController::class, 'index'])
     ->where('status', 'open|closed')
     ->name('ticket.index');
+Route::get('/users/{email}/tickets', [TicketsController::class, 'user'])
+    ->name('ticket.user');
 
