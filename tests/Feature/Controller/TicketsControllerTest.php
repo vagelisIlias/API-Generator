@@ -66,7 +66,7 @@ class TicketsControllerTest extends TestCase
             ->groupBy('user_name')
             ->orderBy('total', 'desc')
             ->first();
-            
+
         $lastTicket = Ticket::where('status', true)
             ->orderBy('updated_at', 'desc')
             ->first();
