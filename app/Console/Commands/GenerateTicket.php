@@ -28,6 +28,6 @@ class GenerateTicket extends Command
     {
         Ticket::factory()->create();
 
-        $this->info('Ticket generated successfully!');  
+        $this->info('Ticket generated successfully!');
     }
 }

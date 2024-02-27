@@ -2,14 +2,13 @@
 
 namespace Tests\Feature\Console\Commands;
 
-use Tests\TestCase;
 use App\Models\Ticket;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Artisan;
+use Tests\TestCase;
 
 class GenerateTicketTest extends TestCase
-{   
+{
     use RefreshDatabase;
 
     public function test_it_generates_a_ticket()

@@ -31,6 +31,6 @@ class ProcessTicket extends Command
             ->first();
 
         $ticket->update(['status' => true]);
-        $this->info('Ticket processed successfully: ' . $ticket->id);
+        $this->info('Ticket processed successfully: '.$ticket->id);
     }
 }

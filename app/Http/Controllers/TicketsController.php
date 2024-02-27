@@ -30,7 +30,7 @@ class TicketsController extends Controller
             ->groupBy(['user_name', 'user_email'])
             ->orderBy('total', 'desc')
             ->first();
-            
+
         $lastTicket = Ticket::where('status', true)
             ->orderBy('updated_at', 'desc')
             ->first();
@@ -38,7 +38,7 @@ class TicketsController extends Controller
         return response()->json([
             'total_tickets' => $totalTickets,
             'unprocessed_tickets' => $unprocessedTickets,
-            'most_tickets_by_user' => $userWithMostTickets->user_name . ' (' . $userWithMostTickets->total . ')',
+            'most_tickets_by_user' => $userWithMostTickets->user_name.' ('.$userWithMostTickets->total.')',
             'last_processed' => $lastTicket?->updated_at,
         ]);
     }

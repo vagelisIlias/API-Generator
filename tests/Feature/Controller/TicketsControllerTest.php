@@ -2,38 +2,37 @@
 
 namespace Tests\Feature\Controller;
 
-use Tests\TestCase;
 use App\Models\Ticket;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
+use Tests\TestCase;
 
 class TicketsControllerTest extends TestCase
-{   
+{
     use RefreshDatabase;
 
     public function test_it_can_show_a_generated_ticket_with_status_zero()
-    {   
+    {
         $this->withoutExceptionHandling();
 
         $ticket = Ticket::factory()->create(['status' => false]);
-    
-        $response = $this->json('get', route('ticket.index', ['status' => 'closed']));
-    
+
+        $response = $this->json('get', route('ticket.index', ['status' => 'open']));
+
         $this->assertFalse($ticket->fresh()->status);
 
         $response->assertStatus(200);
     }
 
     public function test_it_can_show_a_generated_ticket_with_status_one()
-    {   
+    {
         $this->withoutExceptionHandling();
 
-        $ticket = Ticket::factory()->create(['status' => false]);
-    
-        $response = $this->json('get', route('ticket.index', ['status' => 'open']));
-    
-        $this->assertFalse($ticket->fresh()->status);
+        $ticket = Ticket::factory()->create(['status' => true]);
+
+        $response = $this->json('get', route('ticket.index', ['status' => 'closed']));
+
+        $this->assertTrue($ticket->fresh()->status);
 
         $response->assertStatus(200);
     }
@@ -50,8 +49,8 @@ class TicketsControllerTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_it_can_return_stats()
-    {   
+    public function test_it_can_return_the_stats()
+    {
         $this->withoutExceptionHandling();
 
         Ticket::factory()->count(5)->create(['status' => false]);
@@ -70,11 +69,11 @@ class TicketsControllerTest extends TestCase
         $lastTicket = Ticket::where('status', true)
             ->orderBy('updated_at', 'desc')
             ->first();
-    
+
         $response->assertStatus(200, [
             'total_tickets' => $totalTickets,
             'unprocessed_tickets' => $unprocessedTickets,
-            'most_tickets_by_user' => $userWithMostTickets->user_name . ' (' . $userWithMostTickets->total . ')',
+            'most_tickets_by_user' => $userWithMostTickets->user_name.' ('.$userWithMostTickets->total.')',
             'last_processed' => $lastTicket?->updated_at,
         ]);
     }
