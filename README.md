@@ -39,3 +39,6 @@ This project generates and processes tickets through console commands and provid
 ## Run Tests
 
 ```php artisan test```
+
+## Run Schedule 
+```php artisan schedule:run```
