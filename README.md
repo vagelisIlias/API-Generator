@@ -14,6 +14,10 @@ This project generates and processes tickets through console commands and provid
 
 ```composer install```
 
+## Run Migration
+
+``` php artisan migrate```
+
 ## Generate Ticket
 
 ```php artisan app:generate-ticket```
@@ -35,4 +39,3 @@ This project generates and processes tickets through console commands and provid
 ## Run Tests
 
 ```php artisan test```
-
