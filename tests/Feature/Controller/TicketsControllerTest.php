@@ -2,11 +2,10 @@
 
 namespace Tests\Feature\Controller;
 
-use Tests\TestCase;
 use App\Models\Ticket;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Tests\TestCase;
 
 class TicketsControllerTest extends TestCase
 {
@@ -56,14 +55,14 @@ class TicketsControllerTest extends TestCase
         $response = $this->json('get', route('ticket.user', ['email' => $ticket]));
 
         $response->assertStatus(200);
-        
+
         $content = $response->getOriginalContent();
 
         $this->assertInstanceOf(LengthAwarePaginator::class, $content);
-    
+
         if (! $content->isEmpty()) {
             $this->assertEquals($userEmail, $content->first()->user_email);
-        } 
+        }
     }
 
     public function test_it_can_return_the_stats()
@@ -80,7 +79,7 @@ class TicketsControllerTest extends TestCase
             ->first();
 
         $response->assertStatus(200);
-        
+
         $this->assertEquals([
             'total_tickets' => 8,
             'unprocessed_tickets' => 5,
