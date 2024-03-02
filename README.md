@@ -1,5 +1,5 @@
 
-## Project Ticket Generator
+## API Generator Project
 
 This project generates and processes tickets through console commands and provides API endpoints for managing tickets.
 
